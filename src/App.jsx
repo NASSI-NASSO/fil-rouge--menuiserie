@@ -12,9 +12,10 @@ import AddProducts from "./pages/admin/AddProducts";
 import EditProduct from "./pages/admin/EditProduct"
 
 function App() {
+   
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar  />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/producttts" element={<Produtts />} />

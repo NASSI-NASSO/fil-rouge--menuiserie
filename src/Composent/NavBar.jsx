@@ -3,15 +3,14 @@ import { useState } from "react";
 
 export default function Navbar() {
   const [openAdmin, setOpenAdmin] = useState(false);
-
   return (
-    <nav className="bg-gray-900 text-white px-6 py-4 flex justify-between items-center">
+    <nav className="bg-gray-900 text-white px-6 py-4 flex justify-between items-center shadow">
       {/* Logo */}
       <div className="flex-col  flex justify-start ">
       <Link to="/" className="text-2xl font-bold text-orange-500">
         <img src="logo.png"alt="Logo"className="h-12 w-auto"/>
       </Link>
-      </div>
+      </div> 
 
       {/* Menu */}
       <ul className="flex items-center gap-6">

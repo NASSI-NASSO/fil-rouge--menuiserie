@@ -36,6 +36,7 @@ export default function Products() {
       <p className="text-gray-600 text-sm mt-2">
         {product.description}
       </p>
+      <h2>{product.prix}</h2>
 
       <button
         onClick={() => dispatch(addToDevis(product))}
