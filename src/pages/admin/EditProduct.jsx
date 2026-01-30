@@ -113,7 +113,7 @@ export default function EditProduct() {
             value={product.titre}
             onChange={handleChange}
             placeholder="Titre du produit"
-            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300"
             required
           />
         </div>
@@ -126,7 +126,7 @@ export default function EditProduct() {
             onChange={handleChange}
             placeholder="Description du produit"
             rows="4"
-            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 resize-none"
+            className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300 resize-none"
           />
         </div>
 
@@ -134,11 +134,11 @@ export default function EditProduct() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Matériau</label>
-            <select 
-              name="materiau" 
-              value={product.materiau} 
-              onChange={handleChange} 
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white"
+            <select
+              name="materiau"
+              value={product.materiau}
+              onChange={handleChange}
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300 bg-white"
             >
               <option value="">Sélectionner</option>
               <option>Aluminium</option>
@@ -149,11 +149,11 @@ export default function EditProduct() {
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Catégorie</label>
-            <select 
-              name="categorie" 
-              value={product.categorie} 
-              onChange={handleChange} 
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white"
+            <select
+              name="categorie"
+              value={product.categorie}
+              onChange={handleChange}
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300 bg-white"
             >
               <option value="">Sélectionner</option>
               <option>Fenêtre</option>
@@ -164,11 +164,11 @@ export default function EditProduct() {
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Profil</label>
-            <select 
-              name="profil" 
-              value={product.profil} 
-              onChange={handleChange} 
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white"
+            <select
+              name="profil"
+              value={product.profil}
+              onChange={handleChange}
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300 bg-white"
             >
               <option value="">Sélectionner</option>
               <option>Standard</option>
@@ -182,39 +182,39 @@ export default function EditProduct() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Dimensions</label>
-            <input 
-              type="text" 
-              name="dimensions" 
-              value={product.dimensions} 
-              onChange={handleChange} 
-              placeholder="Ex: 2,20 H*1,20 L" 
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300" 
+            <input
+              type="text"
+              name="dimensions"
+              value={product.dimensions}
+              onChange={handleChange}
+              placeholder="Ex: 2,20 H*1,20 L"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300"
             />
           </div>
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Vantaux</label>
-            <input 
-              type="number" 
-              name="vantaux" 
-              value={product.vantaux} 
-              onChange={handleChange} 
-              min="1" 
-              step="1" 
-              placeholder="Nombre" 
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300" 
+            <input
+              type="number"
+              name="vantaux"
+              value={product.vantaux}
+              onChange={handleChange}
+              min="1"
+              step="1"
+              placeholder="Nombre"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300"
             />
           </div>
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Prix (MAD) *</label>
-            <input 
-              type="number" 
-              name="prix" 
-              value={product.prix} 
-              onChange={handleChange} 
-              min="0.01" 
-              step="0.01" 
-              placeholder="Prix" 
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300" 
+            <input
+              type="number"
+              name="prix"
+              value={product.prix}
+              onChange={handleChange}
+              min="0.01"
+              step="0.01"
+              placeholder="Prix"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300"
               required
             />
           </div>
@@ -230,7 +230,7 @@ export default function EditProduct() {
               value={product.couleur}
               onChange={handleChange}
               placeholder="Ex: Gris givré"
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300"
             />
           </div>
           <div className="flex items-end">
@@ -240,7 +240,7 @@ export default function EditProduct() {
                 name="motorise"
                 checked={product.motorise}
                 onChange={handleChange}
-                className="w-5 h-5 text-orange-500 border-gray-300 rounded focus:ring-orange-500 focus:ring-2"
+                className="w-5 h-5 text-brand-teal border-gray-300 rounded focus:ring-brand-teal focus:ring-2"
               />
               <span className="text-gray-700 font-medium">Motorisé</span>
             </label>
@@ -265,8 +265,8 @@ export default function EditProduct() {
             accept="image/*"
             onChange={handleChange}
             className="block w-full text-sm text-gray-600
-            file:bg-gradient-to-r file:from-orange-500 file:to-orange-600 file:text-white file:px-6 file:py-3
-            file:rounded-xl file:border-0 file:font-semibold file:cursor-pointer hover:file:from-orange-600 hover:file:to-orange-700 transition-all duration-300 cursor-pointer"
+            file:bg-gradient-to-r file:from-brand-teal file:to-brand-teal-dark file:text-white file:px-6 file:py-3
+            file:rounded-xl file:border-0 file:font-semibold file:cursor-pointer hover:file:from-brand-teal-dark hover:file:to-brand-blue transition-all duration-300 cursor-pointer"
           />
         </div>
 

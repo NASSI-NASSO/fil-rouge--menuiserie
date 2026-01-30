@@ -83,7 +83,7 @@ export default function Home() {
             {
               title: "Fer Forgé",
               text: "Traditionnel et robuste. Pour un style classique et authentique.",
-              gradient: "from-orange-600 to-red-600",
+              gradient: "from-brand-blue to-gray-800",
             },
           ].map((mat, i) => (
             <motion.div
@@ -103,7 +103,7 @@ export default function Home() {
       </section>
 
       {/* 🔥 CALL TO ACTION */}
-      <section className="py-24 px-6 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600 text-white text-center relative overflow-hidden">
+      <section className="py-24 px-6 bg-gradient-to-r from-brand-teal via-brand-teal-dark to-brand-blue text-white text-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div
             className="absolute top-0 left-0 w-full h-full"
@@ -142,7 +142,7 @@ export default function Home() {
           >
             <Link
               to="/devis"
-              className="inline-block bg-white text-orange-600 px-10 py-5 rounded-full font-bold text-lg shadow-2xl hover:shadow-white/50 transition-all duration-300"
+              className="inline-block bg-white text-brand-teal px-10 py-5 rounded-full font-bold text-lg shadow-2xl hover:shadow-white/50 transition-all duration-300"
             >
               Demander un devis
             </Link>

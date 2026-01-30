@@ -29,7 +29,7 @@ export default function ProductCard({ product, onAdd }) {
         <div className="mb-4">
           <div className="flex items-center gap-2 mb-2">
             {product.categorie && (
-              <span className="text-[10px] uppercase tracking-wider font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">
+              <span className="text-[10px] uppercase tracking-wider font-bold text-brand-teal bg-brand-teal/10 px-2.5 py-1 rounded-lg">
                 {product.categorie}
               </span>
             )}
@@ -40,7 +40,7 @@ export default function ProductCard({ product, onAdd }) {
             )}
           </div>
 
-          <h3 className="text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors duration-300 mb-2">
+          <h3 className="text-xl font-bold text-slate-800 group-hover:text-brand-teal transition-colors duration-300 mb-2">
             {product.titre}
           </h3>
 

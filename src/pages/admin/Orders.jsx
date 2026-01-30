@@ -123,7 +123,7 @@ export default function OrdersAdmin() {
                       {order.produits.map((p) => (
                         <li key={p.id} className="flex justify-between items-center text-gray-700">
                           <span>• {p.titre}</span>
-                          <span className="font-semibold text-orange-600">× {p.quantity}</span>
+                          <span className="font-semibold text-brand-teal">× {p.quantity}</span>
                         </li>
                       ))}
                     </ul>
@@ -134,7 +134,7 @@ export default function OrdersAdmin() {
                 <div className="mt-auto pt-4 border-t border-gray-200">
                   <div className="flex justify-between items-center mb-3">
                     <span className="text-lg font-bold text-gray-700">Total :</span>
-                    <span className="text-2xl font-extrabold bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
+                    <span className="text-2xl font-extrabold bg-gradient-to-r from-brand-teal to-brand-blue bg-clip-text text-transparent">
                       {order.total} MAD
                     </span>
                   </div>

@@ -107,7 +107,7 @@ export default function AddProducts() {
             name="titre"
             onChange={handleChange}
             className="w-full border-2 border-gray-200 rounded-xl px-4 py-3
-            focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+            focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300"
             placeholder="Titre du produit"
             required
           />
@@ -123,7 +123,7 @@ export default function AddProducts() {
             onChange={handleChange}
             rows="4"
             className="w-full border-2 border-gray-200 rounded-xl px-4 py-3
-            focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 resize-none"
+            focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300 resize-none"
             placeholder="Description détaillée du produit"
           />
         </div>
@@ -135,7 +135,7 @@ export default function AddProducts() {
             <select
               name="materiau"
               onChange={handleChange}
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300 bg-white"
             >
               <option value="">Choisir</option>
               <option>Aluminium</option>
@@ -149,7 +149,7 @@ export default function AddProducts() {
             <select
               name="categorie"
               onChange={handleChange}
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300 bg-white"
             >
               <option value="">Choisir</option>
               <option>Fenêtre</option>
@@ -163,7 +163,7 @@ export default function AddProducts() {
             <select
               name="profil"
               onChange={handleChange}
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 bg-white"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300 bg-white"
             >
               <option value="">Choisir</option>
               <option>Standard</option>
@@ -182,7 +182,7 @@ export default function AddProducts() {
               name="dimensions"
               placeholder="Ex: 2,20 H*1,20 L"
               onChange={handleChange}
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300"
             />
           </div>
           <div>
@@ -194,7 +194,7 @@ export default function AddProducts() {
               step="1"
               placeholder="Ex: 2"
               onChange={handleChange}
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300"
             />
           </div>
           <div>
@@ -204,7 +204,7 @@ export default function AddProducts() {
               name="prix"
               placeholder="Ex: 1500"
               onChange={handleChange}
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300"
               required
             />
           </div>
@@ -219,7 +219,7 @@ export default function AddProducts() {
               name="couleur"
               placeholder="Ex: Gris givré"
               onChange={handleChange}
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300"
             />
           </div>
           <div className="flex items-end">
@@ -228,7 +228,7 @@ export default function AddProducts() {
                 type="checkbox"
                 name="motorise"
                 onChange={handleChange}
-                className="w-5 h-5 text-orange-500 border-gray-300 rounded focus:ring-orange-500 focus:ring-2"
+                className="w-5 h-5 text-brand-teal border-gray-300 rounded focus:ring-brand-teal focus:ring-2"
               />
               <span className="text-gray-700 font-medium">Motorisé</span>
             </label>
@@ -244,19 +244,20 @@ export default function AddProducts() {
             accept="image/*"
             onChange={handleChange}
             className="block w-full text-sm text-gray-600
-            file:bg-gradient-to-r file:from-orange-500 file:to-orange-600 file:text-white file:px-6 file:py-3
-            file:rounded-xl file:border-0 file:font-semibold file:cursor-pointer hover:file:from-orange-600 hover:file:to-orange-700 transition-all duration-300 cursor-pointer"
+            file:bg-gradient-to-r file:from-brand-teal file:to-brand-teal-dark file:text-white file:px-6 file:py-3
+            file:rounded-xl file:border-0 file:font-semibold file:cursor-pointer hover:file:from-brand-teal-dark hover:file:to-brand-blue transition-all duration-300 cursor-pointer"
           />
         </div>
 
         {/* Button */}
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700
-          text-white font-bold py-4 rounded-xl text-lg shadow-lg hover:shadow-orange-500/50 transition-all duration-300 mt-8"
+          className="w-full bg-gradient-to-r from-brand-teal to-brand-teal-dark hover:from-brand-teal-dark hover:to-brand-blue
+          text-white font-bold py-4 rounded-xl text-lg shadow-lg hover:shadow-brand-teal/50 transition-all duration-300 mt-8"
         >
           ✅ Ajouter le produit
         </button>
       </form>
     </div>
-  )}
+  )
+}

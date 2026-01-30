@@ -1,12 +1,18 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-brand-teal: #00a299;
+  --color-brand-teal-dark: #008a82;
+  --color-brand-blue: #2b478b;
+  --color-brand-blue-dark: #1e3263;
+}
 
 @layer base {
   * {
     @apply scroll-smooth;
   }
-  
+
   body {
     @apply antialiased;
   }

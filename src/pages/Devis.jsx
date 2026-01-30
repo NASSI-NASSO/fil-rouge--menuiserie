@@ -8,7 +8,9 @@ import {
 import { useState } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaRobot, FaMagic, FaPaperPlane, FaTrash, FaCheckCircle, FaLightbulb } from "react-icons/fa";
+import { FaRobot, FaMagic, FaPaperPlane, FaTrash, FaCheckCircle, FaLightbulb, FaUndo } from "react-icons/fa";
+import { generateProfessionalProposal } from "../services/gemini";
+import { marked } from "marked";
 
 const container = {
   hidden: { opacity: 0 },
@@ -156,7 +158,7 @@ export default function Devis() {
             className="bg-white rounded-3xl shadow-xl p-8 border border-slate-100"
           >
             <h2 className="text-2xl font-bold mb-8 text-slate-800 flex items-center gap-3">
-              <span className="p-2 bg-blue-50 text-blue-600 rounded-xl"><FaLightbulb /></span>
+              <span className="p-2 bg-brand-teal/10 text-brand-teal rounded-xl"><FaLightbulb /></span>
               Configuration du Projet
             </h2>
 
@@ -167,7 +169,7 @@ export default function Devis() {
                   name="materiau"
                   value={form.materiau}
                   onChange={handleChange}
-                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all bg-slate-50"
+                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-brand-teal/10 transition-all bg-slate-50"
                 >
                   <option value="">Sélectionner</option>
                   <option>Inox</option>
@@ -182,7 +184,7 @@ export default function Devis() {
                   name="categorie"
                   value={form.categorie}
                   onChange={handleChange}
-                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all bg-slate-50"
+                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-brand-teal/10 transition-all bg-slate-50"
                 >
                   <option value="">Sélectionner</option>
                   <option>Fenêtre</option>
@@ -198,7 +200,7 @@ export default function Devis() {
                   placeholder="Ex: 120x230"
                   value={form.dimensions}
                   onChange={handleChange}
-                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all bg-slate-50"
+                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-brand-teal/10 transition-all bg-slate-50"
                 />
               </div>
 
@@ -210,7 +212,7 @@ export default function Devis() {
                   name="vantaux"
                   value={form.vantaux}
                   onChange={handleChange}
-                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all bg-slate-50"
+                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-brand-teal/10 transition-all bg-slate-50"
                 />
               </div>
 
@@ -220,7 +222,7 @@ export default function Devis() {
                   name="profil"
                   value={form.profil}
                   onChange={handleChange}
-                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all bg-slate-50"
+                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-brand-teal/10 transition-all bg-slate-50"
                 >
                   <option value="">Sélectionner</option>
                   <option>Standard</option>
@@ -235,18 +237,18 @@ export default function Devis() {
                   placeholder="Ex: Gris givré"
                   value={form.couleur}
                   onChange={handleChange}
-                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all bg-slate-50"
+                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-brand-teal/10 transition-all bg-slate-50"
                 />
               </div>
             </div>
 
-            <label className="flex items-center gap-3 mt-6 p-4 bg-slate-50 rounded-2xl hover:bg-slate-100 transition-colors cursor-pointer border-2 border-transparent hover:border-blue-100">
+            <label className="flex items-center gap-3 mt-6 p-4 bg-slate-50 rounded-2xl hover:bg-slate-100 transition-colors cursor-pointer border-2 border-transparent hover:border-brand-teal/20">
               <input
                 type="checkbox"
                 name="motorise"
                 checked={form.motorise}
                 onChange={handleChange}
-                className="w-5 h-5 accent-blue-600 rounded"
+                className="w-5 h-5 accent-brand-teal rounded"
               />
               <span className="text-slate-700 font-medium">Equipement motorisé</span>
             </label>
@@ -267,14 +269,14 @@ export default function Devis() {
                   placeholder="Email"
                   value={form.email}
                   onChange={handleChange}
-                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all bg-slate-50"
+                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-brand-teal/10 transition-all bg-slate-50"
                 />
                 <input
                   name="telephone"
                   placeholder="Téléphone"
                   value={form.telephone}
                   onChange={handleChange}
-                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all bg-slate-50"
+                  className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-brand-teal/10 transition-all bg-slate-50"
                 />
               </div>
             </div>
@@ -289,13 +291,13 @@ export default function Devis() {
           >
             <h2 className="text-2xl font-bold mb-8 text-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="p-2 bg-orange-50 text-orange-600 rounded-xl">🧾</span>
+                <span className="p-2 bg-brand-teal/10 text-brand-teal rounded-xl">🧾</span>
                 Récapitulatif
               </div>
               <button
                 onClick={generateAiProposal}
                 disabled={isProposalLoading}
-                className="text-xs bg-blue-600 text-white px-4 py-2 rounded-xl font-bold hover:bg-blue-700 transition-all flex items-center gap-2 shadow-lg shadow-blue-500/20 disabled:opacity-50"
+                className="text-xs bg-brand-blue text-white px-4 py-2 rounded-xl font-bold hover:bg-brand-blue-dark transition-all flex items-center gap-2 shadow-lg shadow-brand-blue/20 disabled:opacity-50"
               >
                 {isProposalLoading ? <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}><FaMagic /></motion.div> : <FaMagic />}
                 Générer Devis AI
@@ -339,9 +341,9 @@ export default function Devis() {
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="bg-blue-50/50 p-6 rounded-2xl border border-blue-100"
+                      className="bg-brand-blue/5 p-6 rounded-2xl border border-brand-blue/10"
                     >
-                      <h4 className="font-bold text-blue-800 text-sm uppercase tracking-wider mb-4">Spécifications sur mesure</h4>
+                      <h4 className="font-bold text-brand-blue text-sm uppercase tracking-wider mb-4">Spécifications sur mesure</h4>
                       <div className="grid grid-cols-2 gap-y-3 gap-x-4">
                         <div className="text-xs"><span className="text-slate-500">Catégorie:</span> <span className="font-bold">{form.categorie}</span></div>
                         <div className="text-xs"><span className="text-slate-500">Matériau:</span> <span className="font-bold">{form.materiau}</span></div>
@@ -364,8 +366,8 @@ export default function Devis() {
                   className="mt-6 p-8 bg-slate-900 rounded-[2rem] text-slate-200 text-sm relative border border-slate-700 shadow-2xl"
                 >
                   <div className="flex items-center justify-between mb-4 border-b border-slate-800 pb-4">
-                    <div className="flex items-center gap-2 text-blue-400 font-bold uppercase tracking-widest text-[10px]">
-                      <FaCheckCircle className="text-green-500" /> Proposition Professionnelle AI
+                    <div className="flex items-center gap-2 text-brand-teal font-bold uppercase tracking-widest text-[10px]">
+                      <FaCheckCircle className="text-green-500" /> Proposition Flach Metal AI
                     </div>
                     <button onClick={() => setProposal("")} className="text-slate-500 hover:text-white transition-colors group">
                       <FaUndo size={12} className="group-hover:rotate-[-45deg] transition-transform" />

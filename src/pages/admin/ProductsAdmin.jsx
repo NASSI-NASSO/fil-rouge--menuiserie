@@ -39,7 +39,7 @@ export default function ProductsAdmin() {
 
           <button
             onClick={() => navigate("/admin/AddProduct")}
-            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-orange-500/50 transition-all duration-300 flex items-center gap-2"
+            className="bg-gradient-to-r from-brand-teal to-brand-teal-dark hover:from-brand-teal-dark hover:to-brand-blue text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-brand-teal/50 transition-all duration-300 flex items-center gap-2"
           >
             <span className="text-xl">+</span>
             Ajouter un produit
@@ -74,7 +74,7 @@ export default function ProductsAdmin() {
                     <td className="px-6 py-4 font-semibold text-gray-800">{product.titre}</td>
                     <td className="px-6 py-4 text-gray-600 max-w-xs truncate">{product.description}</td>
                     <td className="px-6 py-4">
-                      <span className="font-bold text-orange-600">{product.prix} MAD</span>
+                      <span className="font-bold text-brand-teal">{product.prix} MAD</span>
                     </td>
                     <td className="px-6 py-4">
                       <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium">
@@ -82,7 +82,7 @@ export default function ProductsAdmin() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+                      <span className="bg-brand-blue/10 text-brand-blue px-3 py-1 rounded-full text-sm font-medium">
                         {product.categorie}
                       </span>
                     </td>

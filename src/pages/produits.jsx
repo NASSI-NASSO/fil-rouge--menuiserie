@@ -50,7 +50,7 @@ export default function Products() {
         >
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3 text-gray-700">
-              <div className="p-3 bg-blue-50 rounded-full text-blue-600">
+              <div className="p-3 bg-brand-teal/10 text-brand-teal">
                 <FaFilter size={20} />
               </div>
               <span className="font-semibold text-lg">Filtrer par :</span>
@@ -59,11 +59,11 @@ export default function Products() {
             <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
               {/* Filtre Catégorie */}
               <div className="relative group w-full md:w-auto">
-                <FaLayerGroup className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+                <FaLayerGroup className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-teal transition-colors" />
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full md:w-48 pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none cursor-pointer"
+                  className="w-full md:w-48 pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal transition-all appearance-none cursor-pointer"
                 >
                   {categories.map((cat) => (
                     <option key={cat} value={cat}>{cat === "All" ? "Toutes les catégories" : cat}</option>
@@ -73,11 +73,11 @@ export default function Products() {
 
               {/* Filtre Matériau */}
               <div className="relative group w-full md:w-auto">
-                <FaTools className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+                <FaTools className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-teal transition-colors" />
                 <select
                   value={selectedMaterial}
                   onChange={(e) => setSelectedMaterial(e.target.value)}
-                  className="w-full md:w-48 pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none cursor-pointer"
+                  className="w-full md:w-48 pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal transition-all appearance-none cursor-pointer"
                 >
                   {materials.map((mat) => (
                     <option key={mat} value={mat}>{mat === "All" ? "Tous les matériaux" : mat}</option>

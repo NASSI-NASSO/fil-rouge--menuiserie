@@ -17,7 +17,7 @@ export default function Login() {
             transition={{ delay: 0.2, type: "spring" }}
             className="inline-block mb-4"
           >
-            <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-4xl">
+            <div className="w-20 h-20 bg-gradient-to-r from-brand-teal to-brand-blue rounded-full flex items-center justify-center text-4xl">
               🔐
             </div>
           </motion.div>
@@ -37,7 +37,7 @@ export default function Login() {
             <input
               type="email"
               placeholder="admin@menuiserie-premium.ma"
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300"
             />
           </div>
 
@@ -48,7 +48,7 @@ export default function Login() {
             <input
               type="password"
               placeholder="••••••••"
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-all duration-300"
             />
           </div>
 
@@ -56,11 +56,11 @@ export default function Login() {
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
-                className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500"
+                className="w-4 h-4 text-brand-teal border-gray-300 rounded focus:ring-brand-teal"
               />
               <span className="text-sm text-gray-600">Se souvenir de moi</span>
             </label>
-            <a href="#" className="text-sm text-orange-600 hover:text-orange-700 font-medium">
+            <a href="#" className="text-sm text-brand-teal hover:text-brand-teal-dark font-medium">
               Mot de passe oublié ?
             </a>
           </div>
@@ -69,7 +69,7 @@ export default function Login() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
-            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-orange-500/50 transition-all duration-300"
+            className="w-full bg-gradient-to-r from-brand-teal to-brand-teal-dark hover:from-brand-teal-dark hover:to-brand-blue text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-brand-teal/50 transition-all duration-300"
           >
             Se connecter
           </motion.button>
@@ -78,7 +78,7 @@ export default function Login() {
         <div className="mt-8 pt-6 border-t border-gray-200">
           <p className="text-center text-sm text-gray-600">
             Retour à l'accueil ?{" "}
-            <Link to="/" className="text-orange-600 hover:text-orange-700 font-semibold">
+            <Link to="/" className="text-brand-teal hover:text-brand-teal-dark font-semibold">
               Cliquez ici
             </Link>
           </p>

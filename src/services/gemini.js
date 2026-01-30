@@ -1,21 +1,35 @@
-import axios from "axios";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const MODEL_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+const genAI = API_KEY ? new GoogleGenerativeAI(API_KEY) : null;
 
+// Diagnostics: List available models to console
+if (genAI) {
+  genAI.getGenerativeModel({ model: "gemini-flash-latest" }).getProperties?.().then(p => console.log("Model properties:", p)).catch(() => { });
+}
+
+const model = genAI ? genAI.getGenerativeModel({ model: "gemini-1.0-pro" }) : null;
+
+/**
+ * Appel générique au modèle Gemini via SDK
+ */
 const callGemini = async (prompt) => {
-  if (!API_KEY) {
-    console.warn("Gemini API Key missing! Simulation mode active.");
+  if (!model) {
+    console.warn("Gemini API Key missing! SDK not initialized.");
     return null;
   }
 
   try {
-    const res = await axios.post(MODEL_URL, {
-      contents: [{ parts: [{ text: prompt }] }]
-    });
-    return res.data.candidates[0].content.parts[0].text;
+    console.log("Sending request to Gemini model...");
+    console.log("API Key", API_KEY);
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return response.text();
   } catch (error) {
-    console.error("Gemini API Error:", error);
+    if (error.message?.includes("404")) {
+      console.error("Gemini 404 Error: The model name or API version might be incorrect for your API key. Please check your AI Studio settings.");
+    }
+    console.error("Gemini SDK Error Details:", error);
     return null;
   }
 };
@@ -35,7 +49,6 @@ export const parseUserIntent = async (userInput) => {
   if (!response) return null;
 
   try {
-    // Nettoyage car Gemini peut retourner des backticks \`\`\`json ... \`\`\`
     const jsonStr = response.replace(/```json|```/g, "").trim();
     return JSON.parse(jsonStr);
   } catch (e) {
@@ -49,14 +62,22 @@ export const parseUserIntent = async (userInput) => {
  */
 export const generateProfessionalProposal = async (data) => {
   const prompt = `
-    Tu es un expert commercial en menuiserie de luxe. 
-    Rédige une proposition commerciale élégante et convaincante en Français pour ce devis :
+    Tu es un expert commercial en menuiserie de luxe chez "Flach Metal". 
+    Rédige une proposition commerciale élégante, persuasive et très structurée en Français pour ce devis :
+    
     Client: ${data.client.nom}
     Produits: ${JSON.stringify(data.produits)}
     Configuration: ${JSON.stringify(data.configuration)}
-    Total: ${data.total} MAD
+    Total Estimé: ${data.total} MAD
     
-    Inclus des conseils techniques et une structure professionnelle (Markdown).
+    Structure de la proposition :
+    1. Salutation chaleureuse et remerciement.
+    2. Analyse personnalisée des besoins (basée sur la configuration ou les produits).
+    3. Présentation des avantages techniques de Flach Metal (Durabilité, Design, Sécurité).
+    4. Récapitulatif clair des options choisies.
+    5. Conclusion rassurante et prochaine étape.
+    
+    Utilise un ton haut de gamme, professionnel et utilise le format Markdown.
   `;
 
   return await callGemini(prompt);

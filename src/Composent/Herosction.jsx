@@ -5,22 +5,22 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const slides = [
     {
-        image: "/hero_alu_window_1769728710942.png",
-        title: "L'Art de l'Aluminium",
-        subtitle: "Des solutions modernes pour un intérieur baigné de lumière.",
+        image: "/hero_alu.png",
+        title: "Innovations en Aluminium",
+        subtitle: "L'excellence du sur-mesure pour vos fenêtres et façades modernes.",
         link: "/produits",
         btnText: "Voir nos fenêtres"
     },
     {
-        image: "/hero_steel_door_1769728726743.png",
+        image: "/hero_door.png",
         title: "Design & Sécurité",
         subtitle: "Des portes d'exception alliant robustesse et esthétisme épuré.",
         link: "/produits",
         btnText: "Découvrir la gamme"
     },
     {
-        image: "/hero_iron_gate_1769728742892.png",
-        title: "Tradition Forge",
+        image: "/hero_gate.png",
+        title: "L'Art de la Ferronnerie",
         subtitle: "L'élégance intemporelle du fer forgé pour vos projets les plus ambitieux.",
         link: "/produits",
         btnText: "Explorer le sur-mesure"
@@ -72,9 +72,9 @@ export function HeroSlider() {
                     <motion.span
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="text-orange-500 font-bold tracking-[0.3em] uppercase mb-4 block"
+                        className="text-brand-teal font-bold tracking-[0.3em] uppercase mb-4 block"
                     >
-                        Menuiserie Premium
+                        Flach Metal
                     </motion.span>
 
                     <h1 className="text-5xl md:text-8xl font-black text-white mb-6 leading-tight">
@@ -88,7 +88,7 @@ export function HeroSlider() {
                     <div className="flex flex-wrap gap-4">
                         <Link
                             to={slides[current].link}
-                            className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-xl shadow-orange-600/20"
+                            className="bg-brand-teal hover:bg-brand-teal-dark text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-xl shadow-brand-teal/20"
                         >
                             {slides[current].btnText}
                         </Link>
@@ -123,7 +123,7 @@ export function HeroSlider() {
                 {slides.map((_, i) => (
                     <div
                         key={i}
-                        className={`h-1.5 transition-all duration-500 rounded-full ${i === current ? "w-12 bg-orange-500" : "w-4 bg-white/30"}`}
+                        className={`h-1.5 transition-all duration-500 rounded-full ${i === current ? "w-12 bg-brand-teal" : "w-4 bg-white/30"}`}
                     />
                 ))}
             </div>
@@ -164,9 +164,9 @@ export function HeroSimple({ title, subtitle }) {
                 )}
 
                 <div className="mt-8 flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-500">
-                    <Link to="/" className="hover:text-orange-500">Accueil</Link>
+                    <Link to="/" className="hover:text-brand-teal">Accueil</Link>
                     <span>/</span>
-                    <span className="text-orange-500">{title}</span>
+                    <span className="text-brand-teal">{title}</span>
                 </div>
             </div>
         </section>
