@@ -7,10 +7,12 @@ import {
 } from "../redux/devisSlice";
 import { useState } from "react";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaRobot, FaMagic, FaPaperPlane, FaTrash, FaCheckCircle, FaLightbulb, FaUndo } from "react-icons/fa";
-import { generateProfessionalProposal } from "../services/gemini";
-import { marked } from "marked";
+import { motion } from "framer-motion";
+import { FaTrash, FaPaperPlane, FaLightbulb, FaMagic } from "react-icons/fa";
+
+
+
+
 
 const container = {
   hidden: { opacity: 0 },
@@ -28,8 +30,10 @@ const item = {
 export default function Devis() {
   const { items, total } = useSelector((state) => state.devis);
   const dispatch = useDispatch();
+const [proposal, setProposal] = useState("");
+
   const [isProposalLoading, setIsProposalLoading] = useState(false);
-  const [proposal, setProposal] = useState("");
+
 
   const [form, setForm] = useState({
     materiau: "Inox",
@@ -44,6 +48,7 @@ export default function Devis() {
     telephone: "",
   });
 
+
   const hasConfiguration =
     form.dimensions ||
     form.couleur ||
@@ -57,29 +62,39 @@ export default function Devis() {
       [name]: type === "checkbox" ? checked : value,
     });
   };
-
+  //gere ai
   const generateAiProposal = async () => {
-    if (items.length === 0 && !hasConfiguration) {
-      alert("Veuillez ajouter des produits ou configurer votre projet avant de générer le devis.");
-      return;
-    }
+  if (items.length === 0 && !hasConfiguration) {
+    alert("Ajoutez des produits ou une configuration avant de générer la proposition.");
+    return;
+  }
 
-    setIsProposalLoading(true);
-    const devisData = {
-      client: { nom: form.nom || "Client" },
-      produits: items,
-      configuration: hasConfiguration ? form : null,
-      total
-    };
+  setIsProposalLoading(true);
 
-    const result = await generateProfessionalProposal(devisData);
-    if (result) {
-      setProposal(result);
-    } else {
-      alert("Erreur lors de la génération du devis AI. Veuillez vérifier votre connexion.");
-    }
-    setIsProposalLoading(false);
+  const devisData = {
+    client: { nom: form.nom || "Client" },
+    produits: items,
+    configuration: hasConfiguration ? form : null,
+    total,
   };
+
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/generate-proposal",
+      devisData
+    );
+
+    setProposal(response.data.proposal); // Affiche le texte AI dans le composant
+    setIsProposalLoading(false);
+  } catch (error) {
+    console.error(error);
+    alert("Erreur lors de la génération de la proposition AI.");
+    setIsProposalLoading(false);
+  }
+};
+
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,11 +132,21 @@ export default function Devis() {
       date: new Date().toISOString(),
     };
 
-    try {
-      await axios.post(
+    try {await Promise.all([
+      // 🔵 إرسال إلى n8n (Email / Automation)
+      axios.post(
+        "https://nass.app.n8n.cloud/webhook-test/fil-rouge",
+        devisData,
+        { headers: { "Content-Type": "application/json" } }
+      ),
+
+      // 🟢 إرسال إلى MockAPI (Stockage)
+      axios.post(
         "https://696787ddbbe157c088b2396f.mockapi.io/product/ordre",
         devisData
-      );
+      ),
+    ]);
+      
       alert("Devis envoyé avec succès ✅");
       dispatch(clearDevis());
       setForm({
@@ -136,7 +161,7 @@ export default function Devis() {
         email: "",
         telephone: "",
       });
-      setProposal("");
+
     } catch (error) {
       console.error(error);
       alert("Erreur lors de l’envoi ❌");
@@ -299,7 +324,7 @@ export default function Devis() {
                 disabled={isProposalLoading}
                 className="text-xs bg-brand-blue text-white px-4 py-2 rounded-xl font-bold hover:bg-brand-blue-dark transition-all flex items-center gap-2 shadow-lg shadow-brand-blue/20 disabled:opacity-50"
               >
-                {isProposalLoading ? <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}><FaMagic /></motion.div> : <FaMagic />}
+                {isProposalLoading ? "Génération..." : "Générer AI"}
                 Générer Devis AI
               </button>
             </h2>
@@ -356,37 +381,10 @@ export default function Devis() {
               )}
             </div>
 
-            {/* Devis AI Professionnel */}
-            <AnimatePresence>
-              {proposal && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="mt-6 p-8 bg-slate-900 rounded-[2rem] text-slate-200 text-sm relative border border-slate-700 shadow-2xl"
-                >
-                  <div className="flex items-center justify-between mb-4 border-b border-slate-800 pb-4">
-                    <div className="flex items-center gap-2 text-brand-teal font-bold uppercase tracking-widest text-[10px]">
-                      <FaCheckCircle className="text-green-500" /> Proposition Flach Metal AI
-                    </div>
-                    <button onClick={() => setProposal("")} className="text-slate-500 hover:text-white transition-colors group">
-                      <FaUndo size={12} className="group-hover:rotate-[-45deg] transition-transform" />
-                    </button>
-                  </div>
 
-                  <div
-                    className="prose prose-invert prose-sm max-w-none text-slate-300 leading-relaxed max-h-[400px] overflow-y-auto pr-4 custom-scrollbar"
-                    dangerouslySetInnerHTML={{ __html: marked(proposal) }}
-                  />
-
-                  <div className="mt-6 pt-4 border-t border-slate-800 text-[10px] text-slate-400 text-center font-medium italic">
-                    Cette proposition a été générée par Intelligence Artificielle
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
 
             <div className="mt-auto pt-8 border-t-2 border-slate-50">
+
               <div className="flex justify-between items-end mb-8">
                 <div>
                   <p className="text-slate-400 text-sm font-medium mb-1">Total estimé</p>
