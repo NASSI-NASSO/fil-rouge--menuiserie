@@ -135,7 +135,7 @@ const [proposal, setProposal] = useState("");
     try {await Promise.all([
       // 🔵 إرسال إلى n8n (Email / Automation)
       axios.post(
-        "https://nass.app.n8n.cloud/webhook-test/fil-rouge",
+        "https://n8n.deontex.com/webhook-test/fil rouge",
         devisData,
         { headers: { "Content-Type": "application/json" } }
       ),

@@ -96,8 +96,19 @@ export default function EditProduct() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-6">
       <form
         onSubmit={handleSubmit}
-        className="max-w-3xl mx-auto bg-white shadow-2xl rounded-3xl p-10 space-y-6 border border-gray-100"
+        className="relative max-w-3xl mx-auto bg-white shadow-2xl rounded-3xl p-10 space-y-6 border border-gray-100"
       >
+        <button
+          type="button"
+          onClick={() => navigate("/admin/productsAdmin")}
+          className="absolute top-6 right-6 p-2 bg-gray-100 hover:bg-red-50 text-gray-400 hover:text-red-500 rounded-full transition-all duration-300"
+          title="Fermer"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
         <div className="text-center mb-8">
           <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2">
             Modifier le produit

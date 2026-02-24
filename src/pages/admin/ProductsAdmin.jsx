@@ -37,13 +37,30 @@ export default function ProductsAdmin() {
             Gestion des Produits
           </h1>
 
-          <button
-            onClick={() => navigate("/admin/AddProduct")}
-            className="bg-gradient-to-r from-brand-teal to-brand-teal-dark hover:from-brand-teal-dark hover:to-brand-blue text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-brand-teal/50 transition-all duration-300 flex items-center gap-2"
-          >
-            <span className="text-xl">+</span>
-            Ajouter un produit
-          </button>
+          <div className="flex gap-4">
+            <button
+              onClick={() => {
+                localStorage.removeItem("isAdmin");
+                navigate("/");
+              }}
+              className="bg-red-50 text-red-600 border border-red-100 hover:bg-red-100 px-6 py-3 rounded-xl font-semibold shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-2"
+            >
+              🚪 Déconnexion
+            </button>
+            <button
+              onClick={() => navigate("/admin/orders")}
+              className="bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 px-6 py-3 rounded-xl font-semibold shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-2"
+            >
+              📋 Commandes
+            </button>
+            <button
+              onClick={() => navigate("/admin/AddProduct")}
+              className="bg-gradient-to-r from-brand-teal to-brand-teal-dark hover:from-brand-teal-dark hover:to-brand-blue text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-brand-teal/50 transition-all duration-300 flex items-center gap-2"
+            >
+              <span className="text-xl">+</span>
+              Ajouter un produit
+            </button>
+          </div>
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">

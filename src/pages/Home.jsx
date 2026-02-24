@@ -1,8 +1,27 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { HeroSlider } from "../Composent/Herosction";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import ProductCard from "../Composent/ProductCard";
+import { useDispatch } from "react-redux";
+import { addToDevis } from "../redux/devisSlice";
 
 export default function Home() {
+  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios
+      .get("https://696787ddbbe157c088b2396f.mockapi.io/product/MenuiserieProduct")
+      .then((res) => {
+        // Prendre les 6 derniers produits (ou les 6 premiers, selon préférence)
+        // Ici on prend les 6 premiers pour l'exemple
+        setProducts(res.data.slice(0, 6));
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className="bg-gradient-to-b from-gray-50 to-white text-gray-800">
       <HeroSlider />
@@ -55,6 +74,40 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* 🟦 DERNIERS PRODUITS */}
+      {products.length > 0 && (
+        <section className="py-24 px-6 max-w-7xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent"
+          >
+            Nos Derniers Produits
+          </motion.h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product, index) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAdd={() => dispatch(addToDevis(product))}
+              />
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+             <Link
+              to="/produits"
+              className="inline-block bg-brand-teal hover:bg-brand-teal-dark text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl"
+            >
+              Voir tous les produits
+            </Link>
+          </div>
+        </section>
+      )}
 
       {/* 🟠 NOS MATÉRIAUX */}
       <section className="bg-gradient-to-br from-gray-100 to-gray-50 py-24 px-6">

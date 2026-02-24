@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const container = {
   hidden: { opacity: 0 },
@@ -18,6 +19,7 @@ const card = {
 export default function OrdersAdmin() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -51,7 +53,17 @@ export default function OrdersAdmin() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto relative">
+        <button
+          onClick={() => navigate("/admin/productsAdmin")}
+          className="absolute top-0 right-0 p-3 bg-white hover:bg-red-50 text-gray-400 hover:text-red-500 rounded-full shadow-md transition-all duration-300 z-10"
+          title="Fermer"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
         <h1 className="text-4xl md:text-5xl font-bold mb-12 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent flex items-center gap-3">
           <span className="text-5xl">📦</span>
           Commandes clients

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Composent/NavBar";
 import Footer from "./Composent/Footer";
 import "./App.css"
@@ -11,6 +11,7 @@ import ProductsAdmin from "./pages/admin/ProductsAdmin";
 import Orders from "./pages/admin/Orders";
 import AddProducts from "./pages/admin/AddProducts";
 import EditProduct from "./pages/admin/EditProduct"
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
    
@@ -21,13 +22,21 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/producttts" element={<Produtts />} />
+            <Route path="/produits" element={<Produtts />} />
             <Route path="/Devis" element={<Devis />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/admin/productsAdmin" element={<ProductsAdmin />} />
-            <Route path="/admin/orders" element={<Orders />} />
-            <Route path="/admin/AddProduct" element={<AddProducts />} />
-            <Route path="/admin/editProduct/:id" element={<EditProduct />} />
+            
+            {/* Protected Admin Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/admin-secret" element={<ProductsAdmin />} />
+              <Route path="/admin/productsAdmin" element={<Navigate to="/admin-secret" replace />} />
+              <Route path="/admin/orders" element={<Orders />} />
+              <Route path="/admin/AddProduct" element={<AddProducts />} />
+              <Route path="/admin/editProduct/:id" element={<EditProduct />} />
+            </Route>
+
+            {/* Redirect old admin link to login if accessed directly */}
+            <Route path="/admin" element={<Navigate to="/login" replace />} />
           </Routes>
         </main>
         <Footer />
