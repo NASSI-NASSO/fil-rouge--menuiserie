@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
+  const { items } = useSelector((state) => state.devis);
+  const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
+
   return (
     <nav className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white px-6 py-4 flex justify-between items-center shadow-2xl border-b border-gray-700 sticky top-0 z-50 backdrop-blur-lg">
       {/* Logo */}
@@ -47,7 +51,14 @@ export default function Navbar() {
             to="/devis"
             className="relative px-3 py-2 text-sm font-medium transition-all duration-300 hover:text-brand-teal group"
           >
-            <span className="relative z-10">Devis</span>
+            <span className="relative z-10 flex items-center gap-2">
+              Devis
+              {totalItems > 0 && (
+                <span className="bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-lg">
+                  {totalItems}
+                </span>
+              )}
+            </span>
             <span className="absolute inset-0 bg-brand-teal/10 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300"></span>
           </Link>
         </li>

@@ -34,16 +34,11 @@ const devisSlice = createSlice({
 
     removeFromDevis: (state, action) => {
       const id = action.payload;
-      const item = state.items.find((i) => i.id === id);
-
-      if (item) {
-         state.total = state.items.reduce(
+      state.items = state.items.filter((i) => i.id !== id);
+      state.total = state.items.reduce(
         (sum, item) => sum + item.prix * item.quantity,
         0
       );
-       // state.total -= item.prix * item.quantity;
-        state.items = state.items.filter((i) => i.id !== id);
-      }
     },
 
     increaseQty: (state, action) => {

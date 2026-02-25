@@ -3,7 +3,8 @@ import {
   removeFromDevis,
   increaseQty,
   decreaseQty,
-  clearDevis
+  clearDevis,
+  addToDevis
 } from "../redux/devisSlice";
 import { useState } from "react";
 import axios from "axios";
@@ -30,17 +31,18 @@ const item = {
 export default function Devis() {
   const { items, total } = useSelector((state) => state.devis);
   const dispatch = useDispatch();
-const [proposal, setProposal] = useState("");
+  const [proposal, setProposal] = useState("");
+  const [pdfUrl, setPdfUrl] = useState(null);
 
   const [isProposalLoading, setIsProposalLoading] = useState(false);
 
 
   const [form, setForm] = useState({
-    materiau: "Inox",
-    categorie: "Fenêtre",
+    materiau: "",
+    categorie: "",
     dimensions: "",
     vantaux: 1,
-    profil: "standard",
+    profil: "",
     motorise: false,
     couleur: "",
     nom: "",
@@ -62,36 +64,68 @@ const [proposal, setProposal] = useState("");
       [name]: type === "checkbox" ? checked : value,
     });
   };
-  //gere ai
-  const generateAiProposal = async () => {
-  if (items.length === 0 && !hasConfiguration) {
-    alert("Ajoutez des produits ou une configuration avant de générer la proposition.");
-    return;
-  }
 
-  setIsProposalLoading(true);
+  const handleAddConfiguration = () => {
+    if (!hasConfiguration) {
+      alert("Veuillez configurer un produit avant de l'ajouter.");
+      return;
+    }
 
-  const devisData = {
-    client: { nom: form.nom || "Client" },
-    produits: items,
-    configuration: hasConfiguration ? form : null,
-    total,
+    const newItem = {
+      id: `custom-${Date.now()}`,
+      titre: `${form.categorie} ${form.materiau} ${form.dimensions ? `(${form.dimensions})` : ""}`,
+      quantity: 1,
+      prix: 0,
+      ...form
+    };
+
+    dispatch(addToDevis(newItem));
+
+    // Reset configuration form only
+    setForm(prev => ({
+      ...prev,
+      materiau: "Inox",
+      categorie: "Fenêtre",
+      dimensions: "",
+      vantaux: 1,
+      profil: "standard",
+      motorise: false,
+      couleur: ""
+    }));
   };
 
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/generate-proposal",
-      devisData
-    );
+  //gere ai
+  const generateAiProposal = async () => {
+    if (items.length === 0 && !hasConfiguration) {
+      alert("Ajoutez des produits ou une configuration avant de générer la proposition.");
+      return;
+    }
 
-    setProposal(response.data.proposal); // Affiche le texte AI dans le composant
-    setIsProposalLoading(false);
-  } catch (error) {
-    console.error(error);
-    alert("Erreur lors de la génération de la proposition AI.");
-    setIsProposalLoading(false);
-  }
-};
+    setIsProposalLoading(true);
+
+    const devisData = {
+      client: { nom: form.nom || "Client", email: form.email },
+      produits: items,
+      configuration: hasConfiguration ? form : null,
+      total,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/generate-pdf",
+        devisData,
+        { responseType: 'blob' }
+      );
+
+      const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+      setPdfUrl(url);
+      setIsProposalLoading(false);
+    } catch (error) {
+      console.error(error);
+      alert("Erreur lors de la génération du PDF AI.");
+      setIsProposalLoading(false);
+    }
+  };
 
 
 
@@ -267,16 +301,26 @@ const [proposal, setProposal] = useState("");
               </div>
             </div>
 
-            <label className="flex items-center gap-3 mt-6 p-4 bg-slate-50 rounded-2xl hover:bg-slate-100 transition-colors cursor-pointer border-2 border-transparent hover:border-brand-teal/20">
-              <input
-                type="checkbox"
-                name="motorise"
-                checked={form.motorise}
-                onChange={handleChange}
-                className="w-5 h-5 accent-brand-teal rounded"
-              />
-              <span className="text-slate-700 font-medium">Equipement motorisé</span>
-            </label>
+            <div className="flex justify-between items-center mt-6">
+              <label className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl hover:bg-slate-100 transition-colors cursor-pointer border-2 border-transparent hover:border-brand-teal/20">
+                <input
+                  type="checkbox"
+                  name="motorise"
+                  checked={form.motorise}
+                  onChange={handleChange}
+                  className="w-5 h-5 accent-brand-teal rounded"
+                />
+                <span className="text-slate-700 font-medium">Equipement motorisé</span>
+              </label>
+
+              <button
+                type="button"
+                onClick={handleAddConfiguration}
+                className="bg-slate-800 text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-700 transition-all flex items-center gap-2 shadow-lg shadow-slate-800/20"
+              >
+                <span>+</span> Ajouter
+              </button>
+            </div>
 
             <div className="mt-10 space-y-4 pt-8 border-t-2 border-slate-50">
               <h3 className="text-xl font-bold text-slate-800 mb-4">Informations Client</h3>
@@ -330,6 +374,19 @@ const [proposal, setProposal] = useState("");
             </h2>
 
             <div className="flex-1 space-y-4 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
+              {/* Display PDF if available */}
+              {pdfUrl && (
+                <div className="mb-4">
+                  <h3 className="text-lg font-bold text-slate-800 mb-2">Devis AI PDF</h3>
+                  <iframe src={pdfUrl} width="100%" height="400px" className="rounded-xl border border-slate-200"></iframe>
+                  <div className="text-right mt-2">
+                    <a href={pdfUrl} download="Devis_FlachMetal.pdf" className="text-sm text-brand-teal hover:underline font-medium">
+                      Télécharger le PDF
+                    </a>
+                  </div>
+                </div>
+              )}
+
               {items.length === 0 && !hasConfiguration ? (
                 <div className="text-center py-20 bg-slate-50 rounded-3xl">
                   <div className="text-5xl mb-4 grayscale opacity-30">📦</div>
@@ -347,7 +404,9 @@ const [proposal, setProposal] = useState("");
                     >
                       <div className="flex-1">
                         <p className="font-bold text-slate-800">{item.titre}</p>
-                        <p className="text-xs text-slate-500 mt-1">{item.prix} MAD / unité</p>
+                        {item.prix > 0 && (
+                          <p className="text-xs text-slate-500 mt-1">{item.prix} MAD / unité</p>
+                        )}
                         <div className="flex items-center gap-3 mt-4">
                           <button onClick={() => dispatch(decreaseQty(item.id))} className="w-8 h-8 bg-white rounded-lg shadow-sm border border-slate-100 flex items-center justify-center hover:bg-slate-50">−</button>
                           <span className="font-bold w-6 text-center">{item.quantity}</span>
@@ -355,7 +414,9 @@ const [proposal, setProposal] = useState("");
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-bold text-lg text-slate-800">{item.prix * item.quantity} MAD</p>
+                        {item.prix > 0 && (
+                          <p className="font-bold text-lg text-slate-800">{item.prix * item.quantity} MAD</p>
+                        )}
                         <button onClick={() => dispatch(removeFromDevis(item.id))} className="text-red-400 hover:text-red-600 mt-2 p-2 rounded-lg hover:bg-red-50 transition-all"><FaTrash size={14} /></button>
                       </div>
                     </motion.div>
@@ -385,14 +446,16 @@ const [proposal, setProposal] = useState("");
 
             <div className="mt-auto pt-8 border-t-2 border-slate-50">
 
-              <div className="flex justify-between items-end mb-8">
-                <div>
-                  <p className="text-slate-400 text-sm font-medium mb-1">Total estimé</p>
-                  <p className="text-4xl font-black text-slate-800">
-                    {total} <span className="text-xl text-slate-400 font-bold uppercase">MAD</span>
-                  </p>
+              {items.length > 0 && (
+                <div className="flex justify-between items-end mb-8">
+                  <div>
+                    <p className="text-slate-400 text-sm font-medium mb-1">Total estimé</p>
+                    <p className="text-4xl font-black text-slate-800">
+                      {total} <span className="text-xl text-slate-400 font-bold uppercase">MAD</span>
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <motion.button
                 whileTap={{ scale: 0.98 }}
