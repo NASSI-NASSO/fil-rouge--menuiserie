@@ -169,6 +169,12 @@ export default function AddProducts() {
               <option>Fenêtre</option>
               <option>Porte</option>
               <option>Portail</option>
+              <option>Store</option>
+              <option>Garde-corps</option>
+              <option>Escalier</option>
+              <option>porte-fenêtre</option>
+              <option>fenêtre basculante</option>
+              <option>brise soleil</option>
             </select>
           </div>
 
