@@ -109,14 +109,14 @@ export default function ProductsAdmin() {
                           onClick={() => navigate(`/admin/Editproduct/${product.id}`)}
                           className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-md hover:shadow-lg"
                         >
-                          ✏️ Modifier
+                          ✏️ 
                         </button>
 
                         <button
                           onClick={() => handleDelete(product.id)}
                           className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-md hover:shadow-lg"
                         >
-                          🗑️ Supprimer
+                          🗑️ 
                         </button>
                       </div>
                     </td>

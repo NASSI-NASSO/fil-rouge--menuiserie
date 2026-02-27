@@ -11,7 +11,7 @@ import ProductsAdmin from "./pages/admin/ProductsAdmin";
 import Orders from "./pages/admin/Orders";
 import AddProducts from "./pages/admin/AddProducts";
 import EditProduct from "./pages/admin/EditProduct"
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./Composent/ProtectedRoute";
 
 function App() {
    

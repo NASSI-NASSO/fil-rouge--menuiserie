@@ -84,11 +84,11 @@ export default function Devis() {
     // Reset configuration form only
     setForm(prev => ({
       ...prev,
-      materiau: "Inox",
-      categorie: "Fenêtre",
+      materiau: "",
+      categorie: "",
       dimensions: "",
       vantaux: 1,
-      profil: "standard",
+      profil: "",
       motorise: false,
       couleur: ""
     }));

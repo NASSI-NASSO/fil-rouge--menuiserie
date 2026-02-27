@@ -8,7 +8,7 @@ const initialState = {
 const devisSlice = createSlice({
   name: "devis",
   initialState,
-  reducers: {
+  reducerss: {
     addToDevis: (state, action) => {
       const product = action.payload;
 
