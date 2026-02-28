@@ -52,9 +52,12 @@ export default function Devis() {
 
 
   const hasConfiguration =
+    form.materiau ||
+    form.categorie ||
     form.dimensions ||
     form.couleur ||
     form.vantaux > 1 ||
+    form.profil ||
     form.motorise;
 
   const handleChange = (e) => {
@@ -69,6 +72,11 @@ export default function Devis() {
     if (!hasConfiguration) {
       alert("Veuillez configurer un produit avant de l'ajouter.");
       return;
+    }
+    
+    if (!form.categorie && !form.materiau) {
+       alert("Veuillez sélectionner au moins une catégorie ou un matériau pour identifier le produit.");
+       return;
     }
 
     const newItem = {
@@ -111,8 +119,13 @@ export default function Devis() {
     };
 
     try {
+      const API_URL =
+    import.meta.env.MODE === "development"
+      ? "http://localhost:5000"
+      : import.meta.env.VITE_API_URL;
+
       const response = await axios.post(
-        "http://localhost:5000/generate-pdf",
+        `${API_URL}/generate-pdf`,
         devisData,
         { responseType: 'blob' }
       );
@@ -169,7 +182,7 @@ export default function Devis() {
     try {await Promise.all([
       // 🔵 إرسال إلى n8n (Email / Automation)
       axios.post(
-        "https://n8n.deontex.com/webhook-test/fil rouge",
+        "https://n8n.deontex.com/webhook/fil rouge",
         devisData,
         { headers: { "Content-Type": "application/json" } }
       ),
@@ -368,8 +381,15 @@ export default function Devis() {
                 disabled={isProposalLoading}
                 className="text-xs bg-brand-blue text-white px-4 py-2 rounded-xl font-bold hover:bg-brand-blue-dark transition-all flex items-center gap-2 shadow-lg shadow-brand-blue/20 disabled:opacity-50"
               >
-                {isProposalLoading ? "Génération..." : "Générer AI"}
-                Générer Devis AI
+                {isProposalLoading ? (
+                  <>
+                    <span className="animate-spin">⌛</span> Génération...
+                  </>
+                ) : (
+                  <>
+                    <FaMagic /> Générer Devis AI
+                  </>
+                )}
               </button>
             </h2>
 
@@ -404,8 +424,10 @@ export default function Devis() {
                     >
                       <div className="flex-1">
                         <p className="font-bold text-slate-800">{item.titre}</p>
-                        {item.prix > 0 && (
+                        {item.prix > 0 ? (
                           <p className="text-xs text-slate-500 mt-1">{item.prix} MAD / unité</p>
+                        ) : (
+                          <p className="text-xs text-brand-teal font-medium mt-1">Sur devis</p>
                         )}
                         <div className="flex items-center gap-3 mt-4">
                           <button onClick={() => dispatch(decreaseQty(item.id))} className="w-8 h-8 bg-white rounded-lg shadow-sm border border-slate-100 flex items-center justify-center hover:bg-slate-50">−</button>
@@ -414,8 +436,10 @@ export default function Devis() {
                         </div>
                       </div>
                       <div className="text-right">
-                        {item.prix > 0 && (
+                        {item.prix > 0 ? (
                           <p className="font-bold text-lg text-slate-800">{item.prix * item.quantity} MAD</p>
+                        ) : (
+                          <p className="font-bold text-lg text-brand-teal">Sur devis</p>
                         )}
                         <button onClick={() => dispatch(removeFromDevis(item.id))} className="text-red-400 hover:text-red-600 mt-2 p-2 rounded-lg hover:bg-red-50 transition-all"><FaTrash size={14} /></button>
                       </div>

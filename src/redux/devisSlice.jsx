@@ -8,7 +8,7 @@ const initialState = {
 const devisSlice = createSlice({
   name: "devis",
   initialState,
-  reducerss: {
+  reducers: {
     addToDevis: (state, action) => {
       const product = action.payload;
 
@@ -64,10 +64,10 @@ const devisSlice = createSlice({
        // state.total -= item.prix;
       }
     },
-  clearDevis: (state) => {
-  state.items = [];
-  state.total = 0;
-}
+    clearDevis: (state) => {
+      state.items = [];
+      state.total = 0;
+    }
   }
 });
 

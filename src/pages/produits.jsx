@@ -107,7 +107,14 @@ export default function Products() {
             <ProductCard
               key={product.id}
               product={product}
-              onAdd={() => dispatch(addToDevis(product))}
+              onAdd={(prod) => {
+                console.log("Adding product:", prod);
+                if (typeof addToDevis === 'function') {
+                  dispatch(addToDevis(prod));
+                } else {
+                  console.error("addToDevis is not a function. Check devisSlice exports.");
+                }
+              }}
             />
           ))}
         </div>
