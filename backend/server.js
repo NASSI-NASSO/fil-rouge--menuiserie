@@ -12,8 +12,45 @@ import { GoogleGenAI } from "@google/genai";
 dotenv.config();
 
 const app = express();
-app.use(cors({ origin: ["http://localhost:5173", "https://fil-rouge-menuiserie.vercel.app/"] }));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://fil-rouge-menuiserie.vercel.app",
+  process.env.FRONTEND_URL // Fallback to env var
+].filter(Boolean);
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("Blocked by CORS:", origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
+
 app.use(express.json());
+
+// Proxy n8n webhook
+app.post("/api/send-quote", async (req, res) => {
+  try {
+    const response = await fetch("https://n8n.deontex.com/webhook/fil rouge", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(req.body)
+    });
+    
+    if (response.ok) {
+      const data = await response.json().catch(() => ({ success: true }));
+      res.json(data);
+    } else {
+      res.status(response.status).json({ error: "n8n error" });
+    }
+  } catch (error) {
+    console.error("n8n proxy error:", error);
+    res.status(500).json({ error: "Failed to send to n8n" });
+  }
+});
 
 // Vérification clé API
 if (!process.env.GEMINI_API_KEY) {
@@ -246,4 +283,4 @@ app.post("/generate-pdf", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Backend démarré sur http://localhost:${PORT}`));
+app.listen(PORT, () => console.log("🚀 Server running on port " + PORT));

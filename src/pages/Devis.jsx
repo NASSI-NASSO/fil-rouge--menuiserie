@@ -102,6 +102,8 @@ export default function Devis() {
     }));
   };
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
   //gere ai
   const generateAiProposal = async () => {
     if (items.length === 0 && !hasConfiguration) {
@@ -119,11 +121,6 @@ export default function Devis() {
     };
 
     try {
-      const API_URL =
-    import.meta.env.MODE === "development"
-      ? "http://localhost:5000"
-      : import.meta.env.VITE_API_URL;
-
       const response = await axios.post(
         `${API_URL}/generate-pdf`,
         devisData,
@@ -180,14 +177,14 @@ export default function Devis() {
     };
 
     try {await Promise.all([
-      // 🔵 إرسال إلى n8n (Email / Automation)
+      // 🔵 Proxy via backend to avoid CORS with n8n
       axios.post(
-        "https://n8n.deontex.com/webhook/fil rouge",
+        `${API_URL}/api/send-quote`,
         devisData,
         { headers: { "Content-Type": "application/json" } }
       ),
 
-      // 🟢 إرسال إلى MockAPI (Stockage)
+      // 🟢 Stockage MockAPI
       axios.post(
         "https://696787ddbbe157c088b2396f.mockapi.io/product/ordre",
         devisData
