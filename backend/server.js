@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://fil-rouge-menuiserie.vercel.app",
+  "https://fil-rouge-menuiserie-git-master-nassimajodar-7594s-projects.vercel.app/",
   process.env.FRONTEND_URL // Fallback to env var
 ].filter(Boolean);
 
