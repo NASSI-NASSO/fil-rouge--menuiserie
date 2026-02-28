@@ -12,22 +12,14 @@ import { GoogleGenAI } from "@google/genai";
 dotenv.config();
 
 const app = express();
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://fil-rouge-menuiserie-git-master-nassimajodar-7594s-projects.vercel.app/",
-  process.env.FRONTEND_URL // Fallback to env var
-].filter(Boolean);
+// const allowedOrigins = [
+//   "http://localhost:5173",
+//   "https://fil-rouge-menuiserie-git-master-nassimajodar-7594s-projects.vercel.app/",
+//   process.env.FRONTEND_URL // Fallback to env var
+// ].filter(Boolean);
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.log("Blocked by CORS:", origin);
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-}));
+app.use(cors()); // Allow all origins for testing
+
 // app.options("*", cors());
 
 app.use(express.json());
