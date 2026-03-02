@@ -318,7 +318,7 @@ export default function Devis() {
                   name="motorise"
                   checked={form.motorise}
                   onChange={handleChange}
-                  className="w-5 h-5 accent-brand-teal rounded"
+                  className="w-5 .h-5 accent-brand-teal rounded"
                 />
                 <span className="text-slate-700 font-medium">Equipement motorisé</span>
               </label>
